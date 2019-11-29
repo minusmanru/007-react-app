@@ -1,13 +1,16 @@
 import React, {Component} from 'react'
 import classes from './Quiz.css'
 import ActiveQuiz from './../../components/ActiveQuiz/ActiveQuiz';
+import FinishedQuiz from './../../components/FinishedQuiz/FinishedQuiz';
+
 // Quiz - страница с тестом
 class Quiz extends Component {
     // в массиве quiz: - параметры относящиеся к голосованию, вопросы и правильные ответы
     state = {
+        results: {}, // { [id]: 'success' 'error' }
         activeQuestion: 0,
-        isFinished: false,
-        answerState: null,
+        isFinished: true, 
+        answerState: null, // { [id]: 'success' 'error' }
         quiz: [ 
             {
                question: 'Какого цвета небо?',
@@ -53,9 +56,16 @@ class Quiz extends Component {
             }
         }
         
+        const results = this.state.results
         if (answerId === this.state.quiz[this.state.activeQuestion].rightAnswerId) {
+
+            if (!results[answerId]) {
+                results[answerId] = 'success'
+            }
+
             this.setState({
-                answerState: { [answerId]: 'success'}
+                answerState: { [answerId]: 'success'},
+                results
             })
 
             const timeout = window.setTimeout(() => {
@@ -76,9 +86,11 @@ class Quiz extends Component {
             }, 1000)
 
         }   else {
-
+            results[answerId] = 'error' 
             this.setState({
-                answerState: { [answerId]: 'error'}
+                answerState: { [answerId]: 'error'},
+                //results: results
+                results
             })
 
         }
@@ -89,6 +101,13 @@ class Quiz extends Component {
         return this.state.activeQuestion + 1 === this.state.quiz.length 
     }
     
+    toStart = () => {
+        this.setState({ 
+            isFinished: false,
+            answerState: null,
+            activeQuestion: 0
+        })
+    }
     
 
     render() {
@@ -97,10 +116,14 @@ class Quiz extends Component {
         return (
             <div className={classes.Quiz}>
                 <div className={classes.QuizWrapper}>
-                    <h1>Ответьте на все вопросы!</h1>
+                    { this.state.isFinished ? <h1>Вы ответили на все вопросы!</h1> : <h1>Ответьте на все вопросы!</h1>}
+                    
                     {
                         this.state.isFinished 
-                        ? <h1>Поздравляем, вы ответили на все вопросы!</h1> 
+                        ? <FinishedQuiz toStart={this.toStart} 
+                        results={this.state.results}
+                        quiz={this.state.quiz}
+                        /> 
                         :  <ActiveQuiz 
                         
                         answers={this.state.quiz[this.state.activeQuestion].answers}
