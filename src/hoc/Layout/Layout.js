@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import classes from './Layout.css'
 
 
 /* весь контент попадающий в Layout, будет выводится в <main> */
@@ -7,7 +8,7 @@ import React, {Component} from 'react'
 class Layout extends Component { 
     render() {
         return (
-            <div> 
+            <div className={classes.Layout}> 
                 <main>
                     { this.props.children }
                 </main>

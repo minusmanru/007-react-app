@@ -1,0 +1,26 @@
+.AnswerItem {
+    padding: 5px 10px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 5px;
+    margin-bottom: 5px;
+    cursor: pointer;
+}
+
+.AnswerItem:hover {
+    transition: backgrod .3s ease-in-out;
+    background: linear-gradient(90deg, #b9b9b96e  0%, #d59fff4f 100%);;
+    
+}
+
+.AnswerItem.success {
+    transition: backgrod .3s ease-in-out;
+    background: linear-gradient(90deg, #168807ab  0%, #168807c4 100%);;
+    
+}
+
+.AnswerItem.error {
+    transition: backgrod .3s ease-in-out;
+    background: linear-gradient(90deg, #8810079f  0%, #881007e0 100%);;
+    
+}
+

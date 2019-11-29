@@ -443,6 +443,8 @@ module.exports = function(webpackEnv) {
               exclude: cssModuleRegex,
               use: getStyleLoaders({
                 importLoaders: 1,
+                modules: true,
+                localIdentName: '[name]__[local]--[hash:base64:5]',
                 sourceMap: isEnvProduction && shouldUseSourceMap,
               }),
               // Don't consider CSS imports dead code even if the
@@ -459,6 +461,8 @@ module.exports = function(webpackEnv) {
                 importLoaders: 1,
                 sourceMap: isEnvProduction && shouldUseSourceMap,
                 modules: true,
+                
+                localIdentName: '[name]__[local]--[hash:base64:5]',
                 getLocalIdent: getCSSModuleLocalIdent,
               }),
             },
@@ -471,6 +475,8 @@ module.exports = function(webpackEnv) {
               use: getStyleLoaders(
                 {
                   importLoaders: 2,
+                  modules: true,
+                localIdentName: '[name]__[local]--[hash:base64:5]',
                   sourceMap: isEnvProduction && shouldUseSourceMap,
                 },
                 'sass-loader'
@@ -490,6 +496,8 @@ module.exports = function(webpackEnv) {
                   importLoaders: 2,
                   sourceMap: isEnvProduction && shouldUseSourceMap,
                   modules: true,
+                  modules: true,
+                localIdentName: '[name]__[local]--[hash:base64:5]',
                   getLocalIdent: getCSSModuleLocalIdent,
                 },
                 'sass-loader'
