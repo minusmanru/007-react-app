@@ -7,6 +7,7 @@ import FinishedQuiz from './../../components/FinishedQuiz/FinishedQuiz';
 class Quiz extends Component {
     // в массиве quiz: - параметры относящиеся к голосованию, вопросы и правильные ответы
     state = {
+        firstClick: {},
         results: {}, // { [id]: 'success' 'error' }
         activeQuestion: 0,
         isFinished: false, 
@@ -50,17 +51,23 @@ class Quiz extends Component {
 
      
     onAnswerClickHandler = (answerId) => {
+        //console.log(this.state.answerState);
         
         if (this.state.answerState) {
             const key = Object.keys(this.state.answerState)[0]
-            if (this.state.answerState[key] === 'success') {
-               return 
+            if (this.state.answerState[key] !== 'success') {
+               
+                
+               return  console.log(this.state.answerState[key]);
+            } else {
+                return
             }
         }
         
         const results = this.state.results
         
-        if (answerId === this.state.quiz[this.state.activeQuestion].rightAnswerId) {
+        const question = this.state.quiz[this.state.activeQuestion]
+        if (answerId === question.rightAnswerId) {
             results[this.state.activeQuestion] = 'success'
             this.setState({
                 answerState: { [answerId]: 'success'},
@@ -82,9 +89,9 @@ class Quiz extends Component {
                 }  
 
                window.clearTimeout(timeout)     
-            }, 700)
+            }, 1000)
 
-        }   else {
+        }   else if (answerId !== question.rightAnswerId) {
 
             results[this.state.activeQuestion] = 'error' 
             this.setState({
@@ -107,9 +114,10 @@ class Quiz extends Component {
                 }  
 
                window.clearTimeout(timeout1)     
-            }, 700)
+            }, 1000)
 
         }
+        //console.log(results);
         
     }
 
@@ -121,13 +129,15 @@ class Quiz extends Component {
         this.setState({ 
             isFinished: false,
             answerState: null,
-            activeQuestion: 0
+            activeQuestion: 0,
+            results: {}
         })
     }
     
     render() {
-          
+        
         return (
+           
             <div className={classes.Quiz}>
                 <div className={classes.QuizWrapper}>
                     { this.state.isFinished ? <h1>Вы ответили на все вопросы!</h1> : <h1>Ответьте на все вопросы!</h1>}

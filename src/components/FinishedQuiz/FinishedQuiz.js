@@ -18,7 +18,7 @@ const FinishedQuiz = props => {
             
             <ul>
                 { props.quiz.map((quizItem, index) => {
-                    console.log(index, 'index');
+                    //console.log(index, 'index');
                     
                     const cls = [
                         'fa',
@@ -34,7 +34,7 @@ const FinishedQuiz = props => {
                         </li>
                     )
                 }) }
-                
+
             </ul>
             <p className={''}>
             <strong>Правильно {successCount} из {props.quiz.length}</strong>
