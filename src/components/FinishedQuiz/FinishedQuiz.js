@@ -1,12 +1,18 @@
 import React from 'react'
 import classes from './FinishedQuiz.css'
+import Button from './../UI/Button/Button';
+import {Link} from 'react-router-dom' 
+// link не содержит в себе параметров - activLink классов и т.д, а просто оборачивает компонент, осуществляя навигацию с меньшим функционалом
 
 const FinishedQuiz = props => {
     // Object.keys() - превращает объект в массив ключей этого объекта. 
-    // для подсчёта массива метод reduce(() => {}, 0) первым параметром передаём к.б. функцию, вторым начальное значение с которого считать
-    // первым параметром в reduce(()  передаём total - будет увеличиваться с кажд. итерацией и key - текущую переменную
-    const successCount = Object.keys(props.results).reduce((total, key) => {
-       if (props.results[key] === 'success') { // если results по ключу [key] === 'success', то увеличиваем  total++, который виден на всей итерации
+    // для подсчёта ответов находящихся в массиве results, используем метод reduce(() => {}, 0) первым параметром передаём к.б. функцию, 
+    //вторым начальное значение с которого считать
+    // первым параметром в reduce(()  передаём total++ - которая будет увеличиваться с каждой итерацией, и key - текущую переменную
+    // если results по ключу [key] === 'success', то увеличивается total++, который виден на всей итерации
+    
+    const successCount = Object.keys(props.results).reduce((total, key) => { // считаем правильные ответы из state - results
+       if (props.results[key] === 'success') { 
             total++
        } 
        return total                                                                        
@@ -41,7 +47,12 @@ const FinishedQuiz = props => {
                 
             </p>
             <div className={''}>
-                <button onClick={() => props.toStart()}>Попробовать заново</button>
+                {/* Попробовать заново - </Button> вызывает - toStart = () => { в файле Quiz */}
+                <Button onClick={() => props.toStart()} type="primary" >Попробовать заново</Button> 
+                <Link to={'/'}>
+                    <Button  type="success" >Перейти в список тестов</Button>
+                </Link>
+                {/* <button onClick={() => props.toStart()}>Попробовать заново</button> */}
             </div>
         </div>
     )
